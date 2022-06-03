@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <vector>
 #include <iostream>
-#include "tetgen_lib\tetgen.h"
+#include "tetgen_lib/tetgen.h"
 #include "particule.cpp"
 
 int main(int argc, char const *argv[])
 {
-    int _nbparticules = 10;
-    int _dimCage = 5;
+    int _nbparticules = 100;
+    int _dimCage = 10;
 
 
     std::vector<particule*> _particules;
@@ -17,9 +17,8 @@ int main(int argc, char const *argv[])
     {
         _particules.push_back(new particule(rand() * _dimCage , rand() * _dimCage, rand() * _dimCage));
     }
-    tetgenio in, out;
+    tetgenio in;
     in.initialize();
-    out.initialize();
     in.numberofpoints = _nbparticules;
     in.pointlist	  = new REAL[ in.numberofpoints * 3 ];
 
@@ -36,6 +35,6 @@ int main(int argc, char const *argv[])
     param[ 2 ]	 = 'e';
     param[ 3 ]	 = 'Q';
     param[ 4 ]	 = '\0';
-    tetrahedralize( param, &in, &out );
+    tetrahedralize( "", &in, NULL );
     return 0;
 }
