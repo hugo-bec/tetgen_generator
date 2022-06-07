@@ -7,7 +7,7 @@
 
 int main(int argc, char const *argv[])
 {
-    int _nbparticules = 100;
+    int _nbparticules = 10000;
     int _dimCage = 10;
 
 
@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
     }
     tetgenio in, out;
     in.initialize();
-    out.initialize();
+   // out.initialize();
     in.numberofpoints = _nbparticules;
     in.pointlist	  = new REAL[ in.numberofpoints * 3 ];
 
@@ -30,22 +30,19 @@ int main(int argc, char const *argv[])
         in.pointlist[ 3 * i + 2 ] = _particules[ i ]->z;
     }
 
-    char * param = new char[ 2 ];
-    param[ 0 ]	 = 'V';
-   /* param[ 1 ]	 = 'e';
-    param[ 2 ]	 = 'e';*/
+    char * param = new char[ 10 ];
+    param[ 0 ]	 = 'w';
     param[ 1 ]	 = '\0';
-    tetrahedralize( param, &in, &out );
+    //param[ 2 ]	 = '\0';
+    //tetrahedralize( param, &in, &out );
+    tetrahedralize( param, &in, NULL );
+
+    /*printf("nombre aretes: %d\n", out.numberofedges);
+    printf("nombre facets: %d\n", out.numberoffacets);
+    printf("nombre tetrahedre: %d\n", out.numberoftetrahedra);
+    printf("nombre points: %d\n", out.numberofpoints);
     out.save_poly("tetra");
-    out.save_nodes("tetra");
-    //tetrahedralize( param, &in, &tmp );
-
-    /*char * param2 = new char[ 10 ];
-    param2[ 0 ]	 = 'q';
-    param2[ 1 ]	 = '\0';
-    tetrahedralize( param2, &tmp, NULL );*/
-
-    //tetrahedralize( param, &out, NULL );
+    out.save_nodes("tetra");*/
     
     return 0;
 }

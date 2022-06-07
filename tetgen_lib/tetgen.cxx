@@ -2696,6 +2696,9 @@ void tetgenio::save_poly(const char *filebasename)
 
   sprintf(outpolyfilename, "%s.poly", filebasename);
   printf("Saving poly to %s\n", outpolyfilename);
+  printf("nombre aretes: %d\n", numberofedges);
+  printf("nombre face: %d\n", numberoffacets);
+
   fout = fopen(outpolyfilename, "w");
 
   // The zero indicates that the vertices are in a separate .node file.
@@ -2706,6 +2709,7 @@ void tetgenio::save_poly(const char *filebasename)
 
   // Save segments or facets.
   if (mesh_dim == 2) {
+
     // Number of segments, number of boundary markers (zero or one).
     fprintf(fout, "%d  %d\n", numberofedges, edgemarkerlist != NULL ? 1 : 0);
     for (i = 0; i < numberofedges; i++) {
@@ -2717,6 +2721,8 @@ void tetgenio::save_poly(const char *filebasename)
       fprintf(fout, "\n");
     }
   } else {
+
+
     // Number of facets, number of boundary markers (zero or one).
     fprintf(fout, "%d  %d\n", numberoffacets, facetmarkerlist != NULL ? 1 : 0);
     for (i = 0; i < numberoffacets; i++) {
@@ -2726,7 +2732,11 @@ void tetgenio::save_poly(const char *filebasename)
       // Output polygons of this facet.
       for (j = 0; j < f->numberofpolygons; j++) {
         p = &(f->polygonlist[j]);
+
+
         fprintf(fout, "%d  ", p->numberofvertices);
+
+
         for (k = 0; k < p->numberofvertices; k++) {
           if (((k + 1) % 10) == 0) {
             fprintf(fout, "\n  ");
@@ -2775,7 +2785,8 @@ void tetgenio::save_poly(const char *filebasename)
     }
   }
 
-  fclose(fout);  
+  fclose(fout);
+  printf("finish loading \n");
 }
 
 //============================================================================//
@@ -36490,6 +36501,7 @@ void tetrahedralize(tetgenbehavior *b, tetgenio *in, tetgenio *out,
 
   if (!b->quiet) {
     m.statistics();
+
   }
 }
 
