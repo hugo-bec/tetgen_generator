@@ -17,8 +17,9 @@ int main(int argc, char const *argv[])
     {
         _particules.push_back(new particule(rand() * _dimCage , rand() * _dimCage, rand() * _dimCage));
     }
-    tetgenio in;
+    tetgenio in, out;
     in.initialize();
+    out.initialize();
     in.numberofpoints = _nbparticules;
     in.pointlist	  = new REAL[ in.numberofpoints * 3 ];
 
@@ -29,12 +30,22 @@ int main(int argc, char const *argv[])
         in.pointlist[ 3 * i + 2 ] = _particules[ i ]->z;
     }
 
-    char * param = new char[ 5 ];
-    param[ 0 ]	 = 'v';
-    param[ 1 ]	 = 'e';
-    param[ 2 ]	 = 'e';
-    param[ 3 ]	 = 'Q';
-    param[ 4 ]	 = '\0';
-    tetrahedralize( "", &in, NULL );
+    char * param = new char[ 2 ];
+    param[ 0 ]	 = 'V';
+   /* param[ 1 ]	 = 'e';
+    param[ 2 ]	 = 'e';*/
+    param[ 1 ]	 = '\0';
+    tetrahedralize( param, &in, &out );
+    out.save_poly("tetra");
+    out.save_nodes("tetra");
+    //tetrahedralize( param, &in, &tmp );
+
+    /*char * param2 = new char[ 10 ];
+    param2[ 0 ]	 = 'q';
+    param2[ 1 ]	 = '\0';
+    tetrahedralize( param2, &tmp, NULL );*/
+
+    //tetrahedralize( param, &out, NULL );
+    
     return 0;
 }
