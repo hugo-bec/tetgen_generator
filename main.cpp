@@ -2,20 +2,31 @@
 #include <stdio.h>
 #include <vector>
 #include <iostream>
+#include<random>
 #include "tetgen_lib/tetgen.h"
 #include "particule.cpp"
 
 int main(int argc, char const *argv[])
 {
-    int _nbparticules = 10000;
+    int _nbparticules = 10;
     int _dimCage = 10;
 
 
     std::vector<particule*> _particules;
 
+
+
     for (int i = 0; i < _nbparticules; i++)
     {
-        _particules.push_back(new particule(rand() * _dimCage , rand() * _dimCage, rand() * _dimCage));
+        // src : https://stackoverflow.com/questions/686353/random-float-number-generation
+        
+        _particules.push_back(new particule(static_cast <float> (rand()) / static_cast <float> (RAND_MAX) * _dimCage ,
+                                            static_cast <float> (rand()) / static_cast <float> (RAND_MAX) * _dimCage, 
+                                            static_cast <float> (rand()) / static_cast <float> (RAND_MAX) * _dimCage));
+        
+        std::cout<<_particules[i]->x<<std::endl;
+        std::cout<<_particules[i]->y<<std::endl;
+        std::cout<<_particules[i]->z<<std::endl;
     }
     tetgenio in, out;
     in.initialize();
@@ -31,8 +42,8 @@ int main(int argc, char const *argv[])
     }
 
     char * param = new char[ 10 ];
-    param[ 0 ]	 = 'w';
-    param[ 1 ]	 = '\0';
+    //param[ 0 ]	 = '';
+    param[ 0 ]	 = '\0';
     //param[ 2 ]	 = '\0';
     //tetrahedralize( param, &in, &out );
     tetrahedralize( param, &in, NULL );
